@@ -1,0 +1,52 @@
+<section class="bg-gray-50 py-24">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-12">
+      <div class="inline-block bg-white rounded-full px-4 py-1.5 text-sm font-medium border border-gray-200 shadow-sm mb-4">Testimonials</div>
+      <h2 class="text-4xl font-extrabold text-[#1A1A1A]">Their Favorites Feature</h2>
+      <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Leverage insights from your business, customer, and product data to drive and enhance your team's performance and success.</p>
+    </div>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+      <!-- Featured Testimonial -->
+      <div class="bg-purple-50/70 border border-purple-200 rounded-2xl p-8 shadow-lg">
+        <p class="text-2xl font-semibold text-[#1A1A1A] leading-relaxed mb-6">
+          "Pipeliner is the first CRM that feels truly modern. It's powerful, flexible, and fast to build with. There's nothing like it."
+        </p>
+        <div class="flex items-center mb-6">
+          <img ngSrc="https://picsum.photos/id/1005/60/60" width="60" height="60" alt="Sahil Mansuri" class="rounded-full mr-4 border-2 border-white shadow-md">
+          <div>
+            <p class="font-bold text-[#1A1A1A]">Sahil Mansuri</p>
+            <p class="text-gray-600">CEO & Head of Finance</p>
+          </div>
+        </div>
+        <div class="border-t border-purple-200 pt-6">
+          <p class="text-sm font-semibold text-gray-700 mb-3">Favorites Feature</p>
+          <div class="flex flex-wrap gap-3">
+            <span class="bg-white border border-gray-200 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">↔️ Automation</span>
+            <span class="bg-white border border-gray-200 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">📄 Productivity</span>
+            <span class="bg-white border border-gray-200 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">🔄 Pipeline</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- User Carousel -->
+      <div class="flex flex-col items-center">
+        <div class="flex items-center gap-6">
+          @for(user of users; track user.name) {
+          <div class="text-center">
+            <div class="relative inline-block">
+               <img [ngSrc]="user.imageUrl" width="160" height="160" [alt]="user.name" class="rounded-2xl shadow-lg">
+            </div>
+            <p class="mt-4 font-bold text-[#1A1A1A]">{{ user.name }}</p>
+            <p class="text-gray-600">{{ user.group }}</p>
+          </div>
+          }
+        </div>
+        <div class="mt-8 flex space-x-3">
+          <button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 bg-white text-gray-600 hover:bg-gray-100">&lt;</button>
+          <button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 bg-white text-gray-600 hover:bg-gray-100">&gt;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

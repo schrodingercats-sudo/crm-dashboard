@@ -1,0 +1,5 @@
+{
+  "name": "Plan CRM",
+  "description": "A modern CRM dashboard application for managing leads and contacts, built with Angular and Tailwind CSS.",
+  "requestFramePermissions": []
+}

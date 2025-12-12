@@ -1,0 +1,24 @@
+<header class="fixed top-0 left-0 right-0 w-full z-50" 
+        [style.opacity]="opacity()"
+        [style.transform]="'translateY(' + translateY() + '%)'">
+  <div class="container mx-auto px-6 py-4">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <svg class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+        <span class="text-xl font-bold text-[#1A1A1A]">Pipeliner</span>
+      </div>
+      <nav class="hidden md:flex items-center space-x-8">
+        <a href="#" class="text-gray-600 hover:text-black">Product</a>
+        <a href="#" class="text-gray-600 hover:text-black">Solutions</a>
+        <a href="#" class="text-gray-600 hover:text-black">Pricing</a>
+        <a href="#" class="text-gray-600 hover:text-black">Resources</a>
+        <a href="#" class="text-gray-600 hover:text-black">Company</a>
+      </nav>
+      <div class="flex items-center space-x-4">
+        <button class="bg-[#1A1A1A] text-white px-5 py-2 rounded-lg font-semibold hover:bg-black transition-colors">Start for Free</button>
+      </div>
+    </div>
+  </div>
+</header>
