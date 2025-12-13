@@ -1,5 +1,5 @@
 {
-  "name": "Plan CRM",
-  "description": "A modern CRM dashboard application for managing leads and contacts, built with Angular and Tailwind CSS.",
+  "name": "Base44",
+  "description": "A modern, responsive landing page and login screen for a SaaS product called Base44, built with Angular and Tailwind CSS.",
   "requestFramePermissions": []
 }
