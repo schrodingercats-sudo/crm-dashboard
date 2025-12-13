@@ -10,11 +10,48 @@ import { IntegrationComponent } from './integration.component';
 import { TasksComponent } from './tasks.component';
 import { SettingsComponent } from './settings.component';
 import { ContactDetailComponent } from './contact-detail.component';
+import { IdealComponent } from './ideal.component';
+import { PricingComponent } from './pricing.component';
+import { BlogComponent } from './blog.component';
+import { ContactComponent } from './contact.component';
+import { PrivacyComponent } from './privacy.component';
+import { TermsComponent } from './terms.component';
+import { AccountNotFoundComponent } from './account-not-found.component';
+import { FaqPageComponent } from './faq-page.component';
+import { AboutComponent } from './about.component';
+import { ChangelogComponent } from './changelog.component';
+import { BrandComponent } from './brand.component';
+import { HelpComponent } from './help.component';
+import { ReferralPartnersComponent } from './referral-partners.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: LandingComponent,
+  },
+  {
+    path: 'ideal',
+    component: IdealComponent,
+  },
+  {
+    path: 'pricing',
+    component: PricingComponent,
+  },
+  {
+    path: 'blog',
+    component: BlogComponent,
+  },
+  {
+    path: 'contact',
+    component: ContactComponent,
+  },
+  {
+    path: 'privacy',
+    component: PrivacyComponent,
+  },
+  {
+    path: 'terms',
+    component: TermsComponent,
   },
   {
     path: 'dashboard',
@@ -23,6 +60,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'contacts', pathMatch: 'full' },
       { path: 'overview', component: OverviewComponent },
       { path: 'contacts', component: ContactsComponent },
+      { path: 'referral-partners', component: ReferralPartnersComponent },
       { path: 'contacts/:id', component: ContactDetailComponent },
       { path: 'deals', component: DealsComponent },
       { path: 'integration', component: IntegrationComponent },
@@ -37,6 +75,30 @@ export const routes: Routes = [
   {
     path: 'onboarding',
     component: OnboardingComponent,
+  },
+  {
+    path: 'account-not-found',
+    component: AccountNotFoundComponent,
+  },
+  {
+    path: 'faq',
+    component: FaqPageComponent,
+  },
+  {
+    path: 'about',
+    component: AboutComponent,
+  },
+  {
+    path: 'changelog',
+    component: ChangelogComponent,
+  },
+  {
+    path: 'brand',
+    component: BrandComponent,
+  },
+  {
+    path: 'help',
+    component: HelpComponent,
   },
   {
     path: '**',

@@ -2,6 +2,8 @@ import '@angular/compiler';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { provideZonelessChangeDetection } from '@angular/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideHttpClient } from '@angular/common/http';
 
 import { AppComponent } from './src/app.component';
 import { routes } from './src/app.routes';
@@ -10,6 +12,8 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideZonelessChangeDetection(),
     provideRouter(routes, withHashLocation()),
+    provideAnimationsAsync(),
+    provideHttpClient(),
   ],
 }).catch((err) => console.error(err));
 

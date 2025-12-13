@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GoogleGenAI, GenerateContentResponse } from '@google/genai';
+import { environment } from './environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -8,11 +9,10 @@ export class GeminiService {
   private ai: GoogleGenAI | null = null;
 
   constructor() {
-    // The API key is expected to be available in the process.env object.
-    if (process.env.API_KEY) {
-      this.ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    if (environment.apiKey) {
+      this.ai = new GoogleGenAI({ apiKey: environment.apiKey });
     } else {
-        console.error('API_KEY not found in process.env');
+      console.error('API_KEY not found in environment');
     }
   }
 

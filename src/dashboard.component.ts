@@ -14,7 +14,7 @@ import { Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/rou
 export class DashboardComponent {
   private router = inject(Router);
   private elementRef = inject(ElementRef);
-  
+
   isSidebarCollapsed = signal(true); // Default to collapsed to match the screenshot
   isProfileDropdownOpen = signal(false);
   isMobileSidebarOpen = signal(false);
@@ -23,12 +23,12 @@ export class DashboardComponent {
     event.stopPropagation();
     this.isProfileDropdownOpen.update(isOpen => !isOpen);
   }
-  
+
   toggleMobileSidebar(event: MouseEvent): void {
     event.stopPropagation();
     this.isMobileSidebarOpen.update(isOpen => !isOpen);
   }
-  
+
   onDocumentClick(event: MouseEvent): void {
     // Close dropdown if click is outside
     if (this.isProfileDropdownOpen() && !this.elementRef.nativeElement.querySelector('[data-profile-dropdown]')?.contains(event.target)) {
@@ -43,6 +43,6 @@ export class DashboardComponent {
   logout(): void {
     this.isProfileDropdownOpen.set(false);
     this.isMobileSidebarOpen.set(false);
-    this.router.navigate(['/']);
+    this.router.navigate(['/login']);
   }
 }

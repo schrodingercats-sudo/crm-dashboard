@@ -17,8 +17,8 @@
   <!-- Tabs -->
   <div class="border-b border-gray-200">
       <nav class="-mb-px flex space-x-8 overflow-x-auto">
-          <a href="#" class="py-3 px-1 border-b-2 border-gray-800 font-semibold text-gray-800 whitespace-nowrap">Leads</a>
-          <a href="#" class="py-3 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap">Referral Partners</a>
+          <a routerLink="/dashboard/contacts" class="py-3 px-1 border-b-2 border-gray-800 font-semibold text-gray-800 whitespace-nowrap">Leads</a>
+          <a routerLink="/dashboard/referral-partners" class="py-3 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap">Referral Partners</a>
       </nav>
   </div>
 
@@ -28,7 +28,7 @@
       <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-4">
           <div class="relative w-full sm:max-w-xs">
               <span class="absolute inset-y-0 left-0 flex items-center pl-3"><svg class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg></span>
-              <input type="text" placeholder="Search..." class="w-full pl-10 pr-4 py-2 border-0 rounded-md bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500">
+              <input type="text" placeholder="Search..." [value]="searchQuery()" (input)="onSearch($event)" class="w-full pl-10 pr-4 py-2 border-0 rounded-md bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500">
           </div>
           <div class="flex items-center space-x-3 text-gray-500 self-end sm:self-center">
              <button class="flex items-center space-x-1 px-3 py-1.5 border border-gray-300 rounded-md bg-white hover:bg-gray-50">
@@ -51,7 +51,7 @@
         <table class="w-full text-sm">
           <thead class="bg-gray-50">
             <tr class="border-b border-gray-200">
-              <th class="p-3 w-10 text-left"><input type="checkbox" class="rounded border-gray-300 text-gray-700 focus:ring-gray-700"></th>
+              <th class="p-3 w-10 text-left"><input type="checkbox" [checked]="isAllSelected()" (change)="toggleAllSelection($event)" class="rounded border-gray-300 text-gray-700 focus:ring-gray-700"></th>
               <th class="p-3 font-medium tracking-wider text-left text-gray-700 uppercase whitespace-nowrap">Name</th>
               <th class="p-3 font-medium tracking-wider text-left text-gray-700 uppercase whitespace-nowrap">Contacts</th>
               <th class="p-3 font-medium tracking-wider text-left text-gray-700 uppercase whitespace-nowrap">Purpose</th>
@@ -68,7 +68,7 @@
                   [class.hover:bg-gray-50]="lead"
                   [class.cursor-pointer]="lead">
                 @if (lead) {
-                  <td class="p-3"><input type="checkbox" (click)="$event.stopPropagation()" class="rounded border-gray-300 text-gray-700 focus:ring-gray-700"></td>
+                  <td class="p-3"><input type="checkbox" [checked]="isSelected(lead.id)" (click)="$event.stopPropagation()" (change)="toggleSelection(lead.id)" class="rounded border-gray-300 text-gray-700 focus:ring-gray-700"></td>
                   <td class="p-3 whitespace-nowrap">
                     <div class="flex items-center space-x-3">
                       @if (lead.avatar) {
@@ -119,11 +119,18 @@
           <span>Previous</span>
         </button>
         <div class="flex items-center space-x-1">
-          <button (click)="goToPage(1)" class="px-3 py-1.5 rounded-md" [class.bg-gray-100]="currentPage() !== 1" [class.hover:bg-gray-200]="currentPage() !== 1">1</button>
-          <button (click)="goToPage(2)" class="px-3 py-1.5 rounded-md font-semibold" [class.bg-gray-800]="currentPage() === 2" [class.text-white]="currentPage() === 2">2</button>
-          <span class="px-2 py-1.5">...</span>
-          <button (click)="goToPage(8)" class="hidden sm:inline-block px-3 py-1.5 rounded-md hover:bg-gray-200">8</button>
-          <button (click)="goToPage(9)" class="hidden sm:inline-block px-3 py-1.5 rounded-md hover:bg-gray-200">9</button>
+          @for (page of pages(); track $index) {
+             @if (page === '...') {
+                <span class="px-2 py-1.5">...</span>
+             } @else {
+                <button (click)="goToPage(page)" class="px-3 py-1.5 rounded-md font-semibold" 
+                  [class.bg-gray-800]="currentPage() === page" 
+                  [class.text-white]="currentPage() === page"
+                  [class.hover:bg-gray-200]="currentPage() !== page">
+                  {{ page }}
+                </button>
+             }
+          }
         </div>
         <button (click)="nextPage()" [disabled]="currentPage() === totalPages()" class="w-full sm:w-auto flex items-center justify-center space-x-2 px-3 py-2 border border-gray-300 bg-white rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed font-medium">
           <span>Next</span>

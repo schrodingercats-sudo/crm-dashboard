@@ -1,0 +1,85 @@
+<main class="flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
+    <div>
+      <p class="text-sm text-gray-500">My Work</p>
+      <h1 class="text-3xl font-bold text-gray-900">Tasks</h1>
+    </div>
+    <div class="flex items-center space-x-2">
+        <button class="px-4 py-2 border border-gray-300 bg-white rounded-md font-semibold text-sm text-gray-700 hover:bg-gray-100">Filter</button>
+        <button (click)="openAddTaskModal()" class="px-4 py-2 border border-gray-800 bg-gray-800 text-white rounded-md font-semibold text-sm hover:bg-gray-900">Add Task</button>
+    </div>
+  </div>
+
+  <!-- Task List -->
+  <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+    <div class="divide-y divide-gray-200">
+      
+      @for (task of tasks(); track task.id) {
+        <div class="p-4 hover:bg-gray-50 transition-colors flex items-center gap-4">
+          <input type="checkbox" [checked]="task.completed" (change)="toggleTask(task.id)" class="h-5 w-5 text-gray-800 rounded border-gray-300 focus:ring-gray-800">
+          <div class="flex-1 min-w-0" [class.opacity-50]="task.completed">
+            <div class="flex items-center justify-between mb-1">
+              <h4 class="text-base font-semibold text-gray-900 truncate" [class.line-through]="task.completed">{{ task.title }}</h4>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium" [class]="task.priorityColor">{{ task.priority }}</span>
+            </div>
+            <p class="text-sm text-gray-500 truncate" [class.line-through]="task.completed">{{ task.description }}</p>
+          </div>
+          <div class="hidden sm:flex items-center gap-6 text-sm text-gray-500" [class.opacity-50]="task.completed">
+            <div class="flex items-center gap-1">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+              <span>{{ task.dueDate }}</span>
+            </div>
+            <div class="flex -space-x-2">
+               <img [ngSrc]="task.assigneeAvatar" width="24" height="24" alt="Assignee" class="rounded-full border-2 border-white">
+            </div>
+          </div>
+        </div>
+      }
+
+    </div>
+  </div>
+
+  <!-- Add Task Modal -->
+  @if (isAddTaskModalOpen()) {
+    <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+      <div class="relative p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3 text-center">
+          <h3 class="text-lg leading-6 font-medium text-gray-900">Add New Task</h3>
+          <form (submit)="addTask($event)" class="mt-2 text-left">
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                Task Title
+              </label>
+              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" name="title" type="text" placeholder="e.g. Follow up call" required>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
+                Description
+              </label>
+              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" type="text" placeholder="e.g. Call client regarding..." required>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="priority">
+                Priority
+              </label>
+              <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="priority" name="priority">
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+                <option value="None">None</option>
+              </select>
+            </div>
+            <div class="flex items-center justify-between mt-4">
+              <button (click)="closeAddTaskModal()" type="button" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Cancel
+              </button>
+              <button type="submit" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Add Task
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  }
+</main>

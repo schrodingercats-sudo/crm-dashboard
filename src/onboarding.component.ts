@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from './auth.service';
 
 interface OnboardingState {
   step: number;
@@ -42,7 +43,10 @@ export class OnboardingComponent {
     'Something else',
   ];
 
-  constructor(private router: Router) {}
+  private router = inject(Router);
+  private authService = inject(AuthService);
+
+  constructor() { }
 
   nextStep(): void {
     if (!this.isCurrentStepValid()) return;
@@ -51,7 +55,24 @@ export class OnboardingComponent {
       this.state.update((s) => ({ ...s, step: s.step + 1 }));
     } else {
       // Finish onboarding and navigate to the main app dashboard
-      this.router.navigate(['/dashboard']);
+      this.signUp();
+    }
+  }
+
+  async signUpWithGoogle() {
+    try {
+      await this.authService.loginWithGoogle('signup');
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async signUp() {
+    const { email, password } = this.state();
+    try {
+      await this.authService.signUpWithEmail(email, password);
+    } catch (error) {
+      console.error(error);
     }
   }
 
