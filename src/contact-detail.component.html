@@ -1,0 +1,97 @@
+<main class="flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6">
+  @if (lead(); as leadData) {
+    <!-- Header -->
+    <div class="mb-6">
+      <!-- Breadcrumbs -->
+      <nav class="text-sm text-gray-500 mb-2">
+        <a routerLink="/dashboard/contacts" class="hover:underline">Contacts</a>
+        <span class="mx-2">/</span>
+        <span class="font-medium text-gray-800">{{ leadData.name }}</span>
+      </nav>
+      <!-- Title and Actions -->
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex items-center space-x-4">
+          @if (leadData.avatar) {
+            <img [ngSrc]="leadData.avatar" width="48" height="48" [alt]="leadData.name" class="rounded-full">
+          } @else {
+            <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-xl font-bold text-gray-600">
+              {{ leadData.name.charAt(0) }}
+            </div>
+          }
+          <div>
+            <h1 class="text-3xl font-bold text-gray-900">{{ leadData.name }}</h1>
+            <span class="px-2.5 py-1 text-xs rounded-full font-medium" [class]="getStageClass(leadData.stage)">
+              {{ leadData.stage }}
+            </span>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <button class="px-4 py-2 border border-gray-300 bg-white rounded-md font-semibold text-sm text-gray-700 hover:bg-gray-100">Edit</button>
+          <button class="px-4 py-2 border border-gray-800 bg-gray-800 text-white rounded-md font-semibold text-sm hover:bg-gray-900">Add Task</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- Left Column: Details -->
+      <div class="lg:col-span-1 space-y-6">
+        <div class="bg-white p-6 rounded-lg border border-gray-200">
+          <h3 class="text-lg font-bold text-gray-800 border-b border-gray-200 pb-3 mb-4">Contact Details</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between">
+              <span class="text-gray-500">Email</span>
+              <a href="mailto:{{leadData.email}}" class="font-medium text-gray-800 hover:underline">{{ leadData.email }}</a>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Phone</span>
+              <span class="font-medium text-gray-800">{{ leadData.phone }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg border border-gray-200">
+          <h3 class="text-lg font-bold text-gray-800 border-b border-gray-200 pb-3 mb-4">Loan Information</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between">
+              <span class="text-gray-500">Purpose</span>
+              <span class="font-medium text-gray-800">{{ leadData.purpose }}</span>
+            </div>
+            <div class="flex justify-between items-baseline">
+              <span class="text-gray-500">Amount</span>
+              <span class="font-semibold text-lg text-gray-900">{{ formatCurrency(leadData.amount) }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg border border-gray-200">
+          <h3 class="text-lg font-bold text-gray-800 border-b border-gray-200 pb-3 mb-4">Lead Progress</h3>
+           <div class="flex items-center space-x-3">
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-gray-700 h-2 rounded-full" [style.width]="leadData.progress + '%'"></div>
+              </div>
+              <span class="text-gray-700 font-bold text-lg">{{ leadData.progress }}%</span>
+            </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Activity/Tabs -->
+      <div class="lg:col-span-2">
+        <div class="bg-white rounded-lg border border-gray-200 min-h-[400px]">
+           <div class="p-6">
+             <h3 class="text-lg font-bold text-gray-800">Activity</h3>
+             <p class="mt-4 text-gray-500">Activity feed, notes, and tasks associated with this lead will be displayed here.</p>
+           </div>
+        </div>
+      </div>
+    </div>
+
+  } @else {
+    <div class="text-center p-12">
+      <h2 class="text-xl font-semibold text-gray-700">Lead not found</h2>
+      <p class="mt-2 text-gray-500">The lead you are looking for does not exist or could not be loaded.</p>
+      <a routerLink="/dashboard/contacts" class="mt-6 inline-block bg-gray-800 text-white font-semibold py-2 px-5 rounded-lg hover:bg-gray-900 transition-colors">Return to Leads</a>
+    </div>
+  }
+</main>

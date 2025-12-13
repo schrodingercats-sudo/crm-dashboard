@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -9,6 +9,8 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroSectionComponent {
+   isMobileMenuOpen = signal(false);
+
    logos = [
     'https://raw.githubusercontent.com/gilbarbara/logos/main/logos/asana.svg',
     'https://raw.githubusercontent.com/gilbarbara/logos/main/logos/slack.svg',
@@ -16,4 +18,8 @@ export class HeroSectionComponent {
     'https://raw.githubusercontent.com/gilbarbara/logos/main/logos/atlassian.svg',
     'https://raw.githubusercontent.com/gilbarbara/logos/main/logos/jira.svg',
   ];
+
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen.update(isOpen => !isOpen);
+  }
 }

@@ -2,7 +2,7 @@
   <!-- Left Panel: Form -->
   <div class="flex flex-col justify-between p-8 sm:p-12">
     <header>
-      <a href="#" class="flex items-center space-x-3">
+      <a routerLink="/" class="flex items-center space-x-3">
         <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="16" cy="16" r="16" fill="#F97316" />
           <path d="M16 5.33331C9.00002 5.33331 5.33335 9.00002 5.33335 16" stroke="white" stroke-width="3"
@@ -14,10 +14,10 @@
     </header>
 
     <div class="w-full max-w-sm mx-auto my-12">
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">Welcome to <br />Base44</h1>
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">Welcome back to <br />Base44</h1>
       <div class="mt-8">
         <div class="relative">
-          <button
+          <button (click)="login()"
             class="w-full flex items-center justify-center space-x-2 bg-white border border-orange-400 text-gray-700 font-semibold py-3 px-4 rounded-lg hover:bg-orange-50 transition-colors">
             <svg class="w-5 h-5" viewBox="0 0 48 48">
               <path fill="#FFC107"
@@ -46,21 +46,21 @@
           <hr class="w-full border-gray-300" />
         </div>
 
-        <form action="#" method="POST">
+        <div>
           <div>
             <label for="email" class="text-sm font-bold text-gray-700">Email</label>
             <input type="email" id="email" name="email"
-              class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500"
+              class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500 placeholder-gray-500"
               placeholder="Enter your email address" />
           </div>
           <div class="mt-6">
-            <button type="submit"
+            <button (click)="login()"
               class="w-full bg-gray-800 text-white font-semibold py-3 px-4 rounded-lg hover:bg-gray-900 transition-colors">Continue</button>
           </div>
-        </form>
+        </div>
 
         <p class="mt-8 text-center text-sm text-gray-600">
-          Don't have an account? <a href="#" class="font-bold text-gray-800 hover:underline">Sign up</a>
+          Don't have an account? <a routerLink="/onboarding" class="font-bold text-gray-800 hover:underline">Sign up</a>
         </p>
       </div>
     </div>
