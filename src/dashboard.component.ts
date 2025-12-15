@@ -1,21 +1,19 @@
-import { ChangeDetectionStrategy, Component, signal, inject, ElementRef } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
+import { Component, inject, signal, ElementRef } from '@angular/core';
 import { Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { DashboardTestimonialsComponent } from './components/dashboard-testimonials/dashboard-testimonials.component';
 
 @Component({
   selector: 'app-dashboard',
+  standalone: true,
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule, DashboardTestimonialsComponent],
   templateUrl: './dashboard.component.html',
-  imports: [NgOptimizedImage, RouterOutlet, RouterLink, RouterLinkActive],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    '(document:click)': 'onDocumentClick($event)',
-  },
 })
 export class DashboardComponent {
   private router = inject(Router);
   private elementRef = inject(ElementRef);
 
-  isSidebarCollapsed = signal(true); // Default to collapsed to match the screenshot
+  isSidebarCollapsed = signal(true);
   isProfileDropdownOpen = signal(false);
   isMobileSidebarOpen = signal(false);
 

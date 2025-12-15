@@ -1,41 +1,110 @@
-<section class="bg-white py-24">
-  <div class="container mx-auto px-6">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- Card 1 -->
-      <div class="bg-white border border-gray-200 rounded-2xl p-8 shadow-lg text-center flex flex-col">
-        <div class="h-64 bg-blue-50 rounded-lg mb-6 flex items-center justify-center">
-            <img ngSrc="https://images.unsplash.com/photo-1616599335012-1b8e8b2c2f1b?q=80&w=200&h=150&auto=format&fit=crop" width="200" height="150" alt="Workflow design" class="rounded-lg shadow-md object-cover">
+<section class="relative py-24 sm:py-32 overflow-hidden bg-white">
+  <!-- Background Decorative Elements -->
+  <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+    <div class="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-blue-50/50 blur-3xl"></div>
+    <div class="absolute top-[40%] -right-[10%] w-[40%] h-[40%] rounded-full bg-purple-50/50 blur-3xl"></div>
+    <div class="absolute -bottom-[10%] left-[20%] w-[30%] h-[30%] rounded-full bg-green-50/50 blur-3xl"></div>
+  </div>
+
+  <div class="container relative mx-auto px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+      
+      <!-- Card 1: Data Powered Workflows -->
+      <div class="group relative flex flex-col bg-white/80 backdrop-blur-sm rounded-[2rem] p-2 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.07)] hover:-translate-y-2 border border-gray-100 hover:border-blue-100">
+        <div class="relative h-64 w-full rounded-[1.5rem] overflow-hidden mb-6">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10"></div>
+          <img src="https://images.unsplash.com/photo-1616599335012-1b8e8b2c2f1b?q=80&w=800&h=600&auto=format&fit=crop" 
+               width="800" height="600" 
+               alt="Workflow design" 
+               class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out">
+          <div class="absolute top-4 right-4 z-20 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-blue-600 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
+            Workflows
+          </div>
         </div>
-        <h3 class="text-2xl font-bold text-[#1A1A1A] mb-3">Data Powered Workflows Design</h3>
-        <p class="text-gray-600 mb-6 flex-grow">Automate your go market decisions based on the most reliable dataset.</p>
-        <a href="#" class="font-semibold text-blue-600 hover:text-blue-800 self-center">
-          Learn more &rarr;
-        </a>
+        
+        <div class="px-4 pb-6 flex flex-col flex-grow">
+          <h3 class="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+            Data Powered Workflows Design
+          </h3>
+          <p class="text-gray-600 mb-6 leading-relaxed flex-grow">
+            Automate your go-to-market decisions based on the most reliable dataset available.
+          </p>
+          
+          <a href="#" class="inline-flex items-center text-sm font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+            Learn more 
+            <span class="ml-2 w-8 h-8 rounded-full bg-gray-50 group-hover:bg-blue-50 flex items-center justify-center transition-all duration-300 group-hover:translate-x-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </span>
+          </a>
+        </div>
       </div>
       
-      <!-- Card 2 -->
-      <div class="bg-white border border-gray-200 rounded-2xl p-8 shadow-lg text-center flex flex-col">
-        <div class="h-64 bg-purple-50 rounded-lg mb-6 flex items-center justify-center">
-            <img ngSrc="https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=200&h=150&auto=format&fit=crop" width="200" height="150" alt="Team Synergy" class="rounded-lg shadow-md object-cover">
+      <!-- Card 2: Team Synergy -->
+      <div class="group relative flex flex-col bg-white/80 backdrop-blur-sm rounded-[2rem] p-2 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(147,_51,_234,_0.07)] hover:-translate-y-2 border border-gray-100 hover:border-purple-100">
+        <div class="relative h-64 w-full rounded-[1.5rem] overflow-hidden mb-6">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10"></div>
+          <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=800&h=600&auto=format&fit=crop" 
+               width="800" height="600" 
+               alt="Team Synergy" 
+               class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out">
+          <div class="absolute top-4 right-4 z-20 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-purple-600 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
+            Synergy
+          </div>
         </div>
-        <h3 class="text-2xl font-bold text-[#1A1A1A] mb-3">Your Team Synergy Station</h3>
-        <p class="text-gray-600 mb-6 flex-grow">Pipeliner boosts your go market teams productivity and streamlines tasks.</p>
-         <a href="#" class="font-semibold text-blue-600 hover:text-blue-800 self-center">
-          Learn more &rarr;
-        </a>
+        
+        <div class="px-4 pb-6 flex flex-col flex-grow">
+          <h3 class="text-2xl font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-colors duration-300">
+            Your Team Synergy Station
+          </h3>
+          <p class="text-gray-600 mb-6 leading-relaxed flex-grow">
+            Pipeliner boosts your go-to-market team's productivity and streamlines daily tasks.
+          </p>
+          
+          <a href="#" class="inline-flex items-center text-sm font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-300">
+            Learn more 
+            <span class="ml-2 w-8 h-8 rounded-full bg-gray-50 group-hover:bg-purple-50 flex items-center justify-center transition-all duration-300 group-hover:translate-x-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </span>
+          </a>
+        </div>
       </div>
       
-      <!-- Card 3 -->
-      <div class="bg-white border border-gray-200 rounded-2xl p-8 shadow-lg text-center flex flex-col">
-        <div class="h-64 bg-green-50 rounded-lg mb-6 flex items-center justify-center">
-            <img ngSrc="https://images.unsplash.com/photo-1677756119517-756a188d2d9b?q=80&w=200&h=150&auto=format&fit=crop" width="200" height="150" alt="Intelligent Control" class="rounded-lg shadow-md object-cover">
+      <!-- Card 3: Intelligent Control -->
+      <div class="group relative flex flex-col bg-white/80 backdrop-blur-sm rounded-[2rem] p-2 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(22,_163,_74,_0.07)] hover:-translate-y-2 border border-gray-100 hover:border-green-100">
+        <div class="relative h-64 w-full rounded-[1.5rem] overflow-hidden mb-6">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10"></div>
+          <img src="https://images.unsplash.com/photo-1677756119517-756a188d2d9b?q=80&w=800&h=600&auto=format&fit=crop" 
+               width="800" height="600" 
+               alt="Intelligent Control" 
+               class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out">
+          <div class="absolute top-4 right-4 z-20 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-green-600 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
+            Automation
+          </div>
         </div>
-        <h3 class="text-2xl font-bold text-[#1A1A1A] mb-3">Automate with Intelligent Control</h3>
-        <p class="text-gray-600 mb-6 flex-grow">Effortlessly automate intricate business processes with our smart.</p>
-         <a href="#" class="font-semibold text-blue-600 hover:text-blue-800 self-center">
-          Learn more &rarr;
-        </a>
+        
+        <div class="px-4 pb-6 flex flex-col flex-grow">
+          <h3 class="text-2xl font-bold text-gray-900 mb-3 group-hover:text-green-600 transition-colors duration-300">
+            Automate with Intelligent Control
+          </h3>
+          <p class="text-gray-600 mb-6 leading-relaxed flex-grow">
+            Effortlessly automate intricate business processes with our smart control systems.
+          </p>
+          
+          <a href="#" class="inline-flex items-center text-sm font-bold text-gray-900 group-hover:text-green-600 transition-colors duration-300">
+            Learn more 
+            <span class="ml-2 w-8 h-8 rounded-full bg-gray-50 group-hover:bg-green-50 flex items-center justify-center transition-all duration-300 group-hover:translate-x-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </span>
+          </a>
+        </div>
       </div>
+
     </div>
   </div>
 </section>

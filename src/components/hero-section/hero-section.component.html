@@ -1,10 +1,10 @@
 <section
   class="relative pb-16 overflow-hidden"
   style="
-    background: 
-      linear-gradient(to bottom, transparent 85%, #F9FAFB),
-      radial-gradient(ellipse at top left, rgba(110, 231, 183, 0.3), transparent 70%),
-      radial-gradient(ellipse at bottom right, rgba(147, 197, 253, 0.3), transparent 70%);
+    background-image: url('https://framerusercontent.com/images/0yjZY6bepqW4TxGYD7ImZun0uY.png?scale-down-to=2048&width=4486&height=3202');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   "
 >
   <!-- Navigation -->
@@ -12,7 +12,7 @@
     <div class="container mx-auto px-6 py-4">
       <div class="flex items-center justify-between">
         <div class="flex items-center space-x-3">
-          <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none">
             <circle cx="16" cy="16" r="16" fill="#F97316"/>
             <path d="M16 5.33331C9.00002 5.33331 5.33335 9.00002 5.33335 16" stroke="white" stroke-width="3" stroke-linecap="round"/>
             <path d="M26.6667 16C26.6667 23 23 26.6667 16 26.6667" stroke="white" stroke-width="3" stroke-linecap="round"/>
@@ -20,13 +20,13 @@
           <span class="text-2xl font-bold text-[#1A1A1A]">Base44</span>
         </div>
         <nav class="hidden md:flex items-center space-x-8">
-          <a routerLink="/ideal" class="text-gray-700 hover:text-black font-medium">Ideal</a>
-          <a routerLink="/pricing" class="text-gray-700 hover:text-black font-medium">Pricing</a>
-          <a routerLink="/blog" class="text-gray-700 hover:text-black font-medium">Blog</a>
-          <a routerLink="/contact" class="text-gray-700 hover:text-black font-medium">Contact</a>
+          <a routerLink="/ideal" class="text-gray-700 hover:text-black font-medium cursor-pointer">Why Base44</a>
+          <a routerLink="/pricing" class="text-gray-700 hover:text-black font-medium cursor-pointer">Pricing</a>
+          <a routerLink="/blog" class="text-gray-700 hover:text-black font-medium cursor-pointer">Blog</a>
+          <a routerLink="/about" class="text-gray-700 hover:text-black font-medium cursor-pointer">About</a>
         </nav>
         <div class="hidden md:flex items-center space-x-4">
-          <a routerLink="/login" class="bg-[#1A1A1A] text-white px-5 py-2 rounded-lg font-semibold hover:bg-black transition-colors">Start for Free</a>
+          <a routerLink="/onboarding" class="bg-[#1A1A1A] text-white px-5 py-2 rounded-lg font-semibold hover:bg-black transition-colors cursor-pointer">Start for Free</a>
         </div>
         <div class="md:hidden">
           <button (click)="toggleMobileMenu()" class="text-gray-800 hover:text-black focus:outline-none">
@@ -48,11 +48,11 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
         </button>
-        <a routerLink="/ideal" class="text-gray-700 hover:text-black font-medium text-2xl">Ideal</a>
-        <a routerLink="/pricing" class="text-gray-700 hover:text-black font-medium text-2xl">Pricing</a>
-        <a routerLink="/blog" class="text-gray-700 hover:text-black font-medium text-2xl">Blog</a>
-        <a routerLink="/contact" class="text-gray-700 hover:text-black font-medium text-2xl">Contact</a>
-        <a routerLink="/login" class="bg-[#1A1A1A] text-white px-8 py-3 rounded-lg font-semibold hover:bg-black transition-colors text-lg">Start for Free</a>
+        <a routerLink="/ideal" class="text-gray-700 hover:text-black font-medium text-2xl cursor-pointer">Why Base44</a>
+        <a routerLink="/pricing" class="text-gray-700 hover:text-black font-medium text-2xl cursor-pointer">Pricing</a>
+        <a routerLink="/blog" class="text-gray-700 hover:text-black font-medium text-2xl cursor-pointer">Blog</a>
+        <a routerLink="/about" class="text-gray-700 hover:text-black font-medium text-2xl cursor-pointer">About</a>
+        <a routerLink="/onboarding" class="bg-[#1A1A1A] text-white px-8 py-3 rounded-lg font-semibold hover:bg-black transition-colors text-lg cursor-pointer">Start for Free</a>
       </div>
     </div>
   }
@@ -86,7 +86,7 @@
     </p>
 
     <div class="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
-      <a routerLink="/login" class="bg-[#1A1A1A] text-white px-8 py-3 w-full sm:w-auto rounded-xl font-semibold hover:bg-black transition-transform hover:scale-105 shadow-lg">Start for Free</a>
+      <a routerLink="/onboarding" class="bg-[#1A1A1A] text-white px-8 py-3 w-full sm:w-auto rounded-xl font-semibold hover:bg-black transition-transform hover:scale-105 shadow-lg cursor-pointer">Start for Free</a>
       <a routerLink="/contact" class="bg-white text-[#1A1A1A] px-8 py-3 w-full sm:w-auto rounded-xl font-semibold border border-gray-300 hover:bg-gray-50 transition-transform hover:scale-105 shadow-lg cursor-pointer text-center">Contact Sales</a>
     </div>
   </div>
@@ -110,7 +110,7 @@
     <p class="text-center text-gray-500 font-semibold">As Featured In</p>
     <div class="mt-8 flex justify-center items-center gap-x-10 gap-y-8 sm:gap-x-12 flex-wrap px-4">
       @for(logo of logos; track logo) {
-        <img class="h-8 object-contain filter grayscale opacity-60" [ngSrc]="logo" alt="Client Logo" width="158" height="32">
+        <img class="h-8 object-contain" [ngSrc]="logo" alt="Client Logo" width="158" height="32">
       }
     </div>
   </div>

@@ -18,7 +18,7 @@ interface FooterSection {
   standalone: true,
   imports: [CommonModule, LucideAngularModule],
   template: `
-    <footer class="md:rounded-t-6xl relative w-full max-w-6xl mx-auto flex flex-col items-center justify-center rounded-t-4xl border-t bg-[radial-gradient(35%_128px_at_50%_0%,theme(backgroundColor.white/8%),transparent)] px-6 py-12 lg:py-16">
+    <footer class="md:rounded-t-6xl relative w-full max-w-6xl mx-auto flex flex-col items-center justify-center rounded-t-4xl border-t bg-cover bg-center bg-no-repeat px-6 py-12 lg:py-16" style="background-image: url('/assets/desktop-background.webp');">
       <div class="bg-foreground/20 absolute top-0 right-1/2 left-1/2 h-px w-1/3 -translate-x-1/2 -translate-y-1/2 rounded-full blur"></div>
 
       <div class="grid w-full gap-8 xl:grid-cols-3 xl:gap-8">

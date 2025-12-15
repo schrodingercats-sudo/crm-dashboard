@@ -3,21 +3,22 @@
         [style.transform]="'translateY(' + translateY() + '%)'">
   <div class="container mx-auto px-6 py-4">
     <div class="flex items-center justify-between">
-      <div class="flex items-center space-x-2">
-        <svg class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+      <a routerLink="/" class="flex items-center space-x-3 cursor-pointer">
+        <svg class="h-8 w-8" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="16" fill="#F97316"/>
+          <path d="M16 5.33331C9.00002 5.33331 5.33335 9.00002 5.33335 16" stroke="white" stroke-width="3" stroke-linecap="round"/>
+          <path d="M26.6667 16C26.6667 23 23 26.6667 16 26.6667" stroke="white" stroke-width="3" stroke-linecap="round"/>
         </svg>
-        <span class="text-xl font-bold text-[#1A1A1A]">Pipeliner</span>
-      </div>
+        <span class="text-2xl font-bold text-[#1A1A1A]">Base44</span>
+      </a>
       <nav class="hidden md:flex items-center space-x-8">
-        <a href="#" class="text-gray-600 hover:text-black">Product</a>
-        <a href="#" class="text-gray-600 hover:text-black">Solutions</a>
-        <a href="#" class="text-gray-600 hover:text-black">Pricing</a>
-        <a href="#" class="text-gray-600 hover:text-black">Resources</a>
-        <a href="#" class="text-gray-600 hover:text-black">Company</a>
+        <a routerLink="/ideal" class="text-gray-600 hover:text-black cursor-pointer">Why Base44</a>
+        <a routerLink="/pricing" class="text-gray-600 hover:text-black cursor-pointer">Pricing</a>
+        <a routerLink="/blog" class="text-gray-600 hover:text-black cursor-pointer">Blog</a>
+        <a routerLink="/about" class="text-gray-600 hover:text-black cursor-pointer">About</a>
       </nav>
       <div class="flex items-center space-x-4">
-        <button class="bg-[#1A1A1A] text-white px-5 py-2 rounded-lg font-semibold hover:bg-black transition-colors">Start for Free</button>
+        <a routerLink="/onboarding" class="bg-[#1A1A1A] text-white px-5 py-2 rounded-lg font-semibold hover:bg-black transition-colors cursor-pointer">Start for Free</a>
       </div>
     </div>
   </div>

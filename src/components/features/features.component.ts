@@ -89,7 +89,7 @@ export class CircularUIComponent {
     CardComponent,
     CardHeaderComponent,
     CardContentComponent,
-    NgOptimizedImage,
+
     CardDecoratorComponent,
     DualModeImageComponent,
     CircularUIComponent

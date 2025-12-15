@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { FooterComponent } from './components/footer/footer.component';
+import { FooterSectionComponent } from './components/ui/footer-section/footer-section.component';
 
 @Component({
     selector: 'app-blog',
     templateUrl: './blog.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NavbarComponent, FooterComponent],
+    imports: [NavbarComponent, FooterSectionComponent],
 })
 export class BlogComponent { }

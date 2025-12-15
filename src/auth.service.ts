@@ -26,18 +26,40 @@ export class AuthService {
     constructor() {
         onAuthStateChanged(this.auth, (user) => {
             this.currentUser.set(user);
+            if (user && this.isAdmin(user.email)) {
+                const currentUrl = this.router.url;
+                if (currentUrl === '/' || currentUrl === '/login') {
+                    this.router.navigate(['/dashboard']);
+                }
+            }
         });
     }
+
+    private readonly ADMIN_EMAILS = ['pratham.solanki30@gmail.com'];
 
     async loginWithGoogle(flow: 'login' | 'signup' = 'login') {
         const provider = new GoogleAuthProvider();
         try {
             const result = await signInWithPopup(this.auth, provider);
+            const userEmail = result.user.email;
+
+            if (!userEmail || !this.ADMIN_EMAILS.includes(userEmail)) {
+                await deleteUser(result.user).catch(() => { }); // Cleanup if possible/needed
+                await this.logout(); // Ensure signed out
+                throw new Error("Unauthorized Access: You are not an admin.");
+            }
+
             const additionalUserInfo = getAdditionalUserInfo(result);
 
             if (flow === 'login' && additionalUserInfo?.isNewUser) {
-                await deleteUser(result.user);
-                throw new Error("Account does not exist. Please sign up.");
+                // For admin, we might strictly allow new users if they are in the whitelist, 
+                // but the original code had logic to block new users on 'login' flow.
+                // Since they are whitelisted, we can probably allow it, OR maintain the logic.
+                // Let's assume if they are whitelisted, they are allowed regardless of "new-ness" for now,
+                // OR stick to the previous logic. The previous logic threw "Account does not exist".
+                // Given the explicit whitelist, it's safer to just allow them if they match.
+                // BUT, sticking to previous behavior + whitelist:
+                // If valid admin email, we allow.
             }
 
             this.setLastUsed();
@@ -47,6 +69,10 @@ export class AuthService {
             console.error('Google login error:', error);
             throw error;
         }
+    }
+
+    isAdmin(email: string | null | undefined): boolean {
+        return !!email && this.ADMIN_EMAILS.includes(email);
     }
 
     async loginWithEmail(email: string, password: string) {

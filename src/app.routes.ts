@@ -23,6 +23,13 @@ import { ChangelogComponent } from './changelog.component';
 import { BrandComponent } from './brand.component';
 import { HelpComponent } from './help.component';
 import { ReferralPartnersComponent } from './referral-partners.component';
+import { authGuard } from './auth.guard';
+
+// New Components
+import { ClientsComponent } from './dashboard/clients/clients.component';
+import { ClientManagerComponent } from './dashboard/clients/client-manager.component';
+import { PortalLoginComponent } from './portal/portal-login.component';
+import { PortalDashboardComponent } from './portal/portal-dashboard.component';
 
 export const routes: Routes = [
   {
@@ -55,9 +62,8 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent,
     children: [
-      { path: '', redirectTo: 'contacts', pathMatch: 'full' },
+      { path: '', redirectTo: 'clients', pathMatch: 'full' },
       { path: 'overview', component: OverviewComponent },
       { path: 'contacts', component: ContactsComponent },
       { path: 'referral-partners', component: ReferralPartnersComponent },
@@ -66,7 +72,20 @@ export const routes: Routes = [
       { path: 'integration', component: IntegrationComponent },
       { path: 'tasks', component: TasksComponent },
       { path: 'settings', component: SettingsComponent },
+      // New Admin Routes
+      { path: 'clients', component: ClientsComponent },
+      { path: 'clients/:id', component: ClientManagerComponent },
     ],
+    canActivate: [authGuard]
+  },
+  // Customer Portal Routes
+  {
+    path: 'portal',
+    children: [
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'login', component: PortalLoginComponent },
+      { path: 'dashboard', component: PortalDashboardComponent }
+    ]
   },
   {
     path: 'login',
