@@ -16,7 +16,7 @@ export class ContactsComponent {
   itemsPerPage = 7;
   currentPage = signal(1);
   searchQuery = signal('');
-  selectedLeadIds = signal<Set<number>>(new Set());
+  selectedLeadIds = signal<Set<string>>(new Set());
 
   filteredLeads = computed(() => {
     const query = this.searchQuery().toLowerCase();
@@ -88,7 +88,7 @@ export class ContactsComponent {
     this.currentPage.set(1); // Reset to first page on search
   }
 
-  toggleSelection(id: number): void {
+  toggleSelection(id: string): void {
     this.selectedLeadIds.update(ids => {
       const newIds = new Set(ids);
       if (newIds.has(id)) {
@@ -109,7 +109,7 @@ export class ContactsComponent {
     }
   }
 
-  isSelected(id: number): boolean {
+  isSelected(id: string): boolean {
     return this.selectedLeadIds().has(id);
   }
 

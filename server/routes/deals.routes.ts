@@ -1,15 +1,20 @@
 import { Router } from 'express';
-import { getDb } from '../database';
+import { supabase } from '../database';
 
 const router = Router();
 
 // Get all deals
 router.get('/', async (req, res) => {
     try {
-        const db = getDb();
-        const deals = await db.all('SELECT * FROM deals');
-        res.json(deals);
+        const { data, error } = await supabase
+            .from('deals')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        res.json(data);
     } catch (error) {
+        console.error('Error fetching deals:', error);
         res.status(500).json({ error: 'Failed to fetch deals' });
     }
 });
@@ -18,15 +23,25 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const { title, company, value, stage, ownerAvatar, type, typeColor } = req.body;
     try {
-        const db = getDb();
-        const result = await db.run(
-            'INSERT INTO deals (title, company, value, stage, ownerAvatar, type, typeColor) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [title, company, value, stage, ownerAvatar, type, typeColor]
-        );
-        const id = result.lastID;
-        const newDeal = await db.get('SELECT * FROM deals WHERE id = ?', [id]);
-        res.status(201).json(newDeal);
+        // Note: Schema uses 'owner_avatar', 'type_color'. Frontend sends 'ownerAvatar', 'typeColor'.
+        const { data, error } = await supabase
+            .from('deals')
+            .insert({
+                title,
+                company,
+                value,
+                stage,
+                owner_avatar: ownerAvatar,
+                type,
+                type_color: typeColor
+            })
+            .select()
+            .single();
+
+        if (error) throw error;
+        res.status(201).json(data);
     } catch (error) {
+        console.error('Error creating deal:', error);
         res.status(500).json({ error: 'Failed to create deal' });
     }
 });

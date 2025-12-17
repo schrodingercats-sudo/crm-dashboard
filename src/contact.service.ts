@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
 export interface Lead {
-  id: number;
+  id: string;
   name: string;
   avatar: string;
   email: string;
@@ -39,7 +39,7 @@ export class ContactService {
     return this.leads.asReadonly();
   }
 
-  getLead(id: number) {
+  getLead(id: string) {
     return this.leads().find(lead => lead.id === id);
   }
 }

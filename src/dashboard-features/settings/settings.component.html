@@ -1,0 +1,108 @@
+<main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-6">
+  <div class="container mx-auto max-w-3xl">
+    <div class="mb-6">
+      <h1 class="text-3xl font-bold text-gray-900">Settings</h1>
+      <p class="mt-2 text-gray-600">Manage your account settings and preferences.</p>
+    </div>
+
+    <!-- Profile Section -->
+    <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6 mb-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Profile</h3>
+          <p class="mt-1 text-sm text-gray-500">Update your personal information.</p>
+        </div>
+        <div class="mt-5 md:mt-0 md:col-span-2 space-y-6">
+          <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-6 sm:col-span-4">
+              <label for="name" class="block text-sm font-medium text-gray-700">Display Name</label>
+              <input type="text" id="name" [ngModel]="profile().name" (ngModelChange)="updateName($event)"
+                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+            </div>
+
+            <div class="col-span-6 sm:col-span-4">
+              <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+              <input type="email" id="email" [ngModel]="profile().email" (ngModelChange)="updateEmail($event)"
+                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+            </div>
+
+            <div class="col-span-6">
+              <label for="bio" class="block text-sm font-medium text-gray-700">Bio</label>
+              <textarea id="bio" rows="3" [ngModel]="profile().bio" (ngModelChange)="updateBio($event)"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications Section -->
+    <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6 mb-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Notifications</h3>
+          <p class="mt-1 text-sm text-gray-500">Decide how you want to be notified.</p>
+        </div>
+        <div class="mt-5 md:mt-0 md:col-span-2">
+          <fieldset>
+            <div class="mt-4 space-y-4">
+              <div class="flex items-start">
+                <div class="flex items-center h-5">
+                  <input id="email_notif" type="checkbox" [ngModel]="notifications().email" (ngModelChange)="updateEmailNotification($event)"
+                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                </div>
+                <div class="ml-3 text-sm">
+                  <label for="email_notif" class="font-medium text-gray-700">Email Notifications</label>
+                  <p class="text-gray-500">Get emails for major updates.</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="flex items-center h-5">
+                  <input id="push_notif" type="checkbox" [ngModel]="notifications().push" (ngModelChange)="updatePushNotification($event)"
+                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                </div>
+                <div class="ml-3 text-sm">
+                  <label for="push_notif" class="font-medium text-gray-700">Push Notifications</label>
+                  <p class="text-gray-500">Get real-time alerts in your browser.</p>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appearance Section -->
+    <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6 mb-6">
+      <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+          <h3 class="text-lg font-medium leading-6 text-gray-900">Appearance</h3>
+          <p class="mt-1 text-sm text-gray-500">Customize the look and feel.</p>
+        </div>
+        <div class="mt-5 md:mt-0 md:col-span-2">
+           <div class="space-y-4">
+             <div class="flex items-center">
+               <input id="theme_light" name="theme" type="radio" value="light" [ngModel]="appearance().theme" (ngModelChange)="updateTheme($event)"
+                class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+               <label for="theme_light" class="ml-3 block text-sm font-medium text-gray-700">Light Mode</label>
+             </div>
+             <div class="flex items-center">
+               <input id="theme_dark" name="theme" type="radio" value="dark" [ngModel]="appearance().theme" (ngModelChange)="updateTheme($event)"
+                class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+               <label for="theme_dark" class="ml-3 block text-sm font-medium text-gray-700">Dark Mode</label>
+             </div>
+           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-end">
+      <button type="button" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        Cancel
+      </button>
+      <button type="button" (click)="saveSettings()" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        Save Changes
+      </button>
+    </div>
+  </div>
+</main>

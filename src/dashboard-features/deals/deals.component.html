@@ -1,0 +1,38 @@
+
+<main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-6">
+  <div class="h-full flex flex-col">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold text-gray-900">Deals Pipeline</h1>
+      <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium">Add Deal</button>
+    </div>
+
+    <!-- Kanban Board -->
+    <div class="flex-1 overflow-x-auto">
+      <div class="flex space-x-6 min-w-max pb-4 h-full">
+        @for(stage of stages; track stage) {
+          <div class="w-80 flex flex-col bg-gray-100 rounded-lg p-4 h-full">
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">{{ stage }}</h2>
+              <span class="bg-gray-200 text-gray-600 text-xs font-semibold px-2 py-1 rounded-full">{{ dealsByStage()[stage].length }}</span>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto space-y-3">
+              @for(deal of dealsByStage()[stage]; track deal.id) {
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer">
+                  <h3 class="text-gray-900 font-medium mb-1">{{ deal.title }}</h3>
+                  <p class="text-gray-500 text-sm mb-3">{{ deal.company }}</p>
+                  <div class="flex justify-between items-center pt-3 border-t border-gray-100">
+                    <span class="text-sm font-semibold text-gray-900">${{ deal.value.toLocaleString() }}</span>
+                    <div class="h-6 w-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold">
+                      {{ deal.owner.charAt(0) }}
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</main>

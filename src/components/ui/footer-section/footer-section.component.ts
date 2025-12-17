@@ -23,7 +23,7 @@ interface FooterSection {
 
       <div class="grid w-full gap-8 xl:grid-cols-3 xl:gap-8">
         <div class="space-y-4 flex flex-col items-center text-center">
-          <lucide-icon [name]="FrameIcon" class="size-8"></lucide-icon>
+          <img src="https://quintessential-green-9mgcmipg8x-xl5fiw49na.edgeone.dev/zyptenix%20logo.png" alt="Asme Logo" class="h-8 w-auto">
           <p class="text-muted-foreground mt-8 text-sm md:mt-0">
             © {{ currentYear }} Asme. All rights reserved.
           </p>

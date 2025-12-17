@@ -23,47 +23,27 @@ export class AuthService {
 
     currentUser = signal<User | null>(null);
 
+    private readonly ADMIN_EMAILS = ['pratham.solanki30@gmail.com'];
+
     constructor() {
         onAuthStateChanged(this.auth, (user) => {
             this.currentUser.set(user);
-            if (user && this.isAdmin(user.email)) {
+            if (user) {
                 const currentUrl = this.router.url;
                 if (currentUrl === '/' || currentUrl === '/login') {
-                    this.router.navigate(['/dashboard']);
+                    this.navigateBasedOnRole(user);
                 }
             }
         });
     }
 
-    private readonly ADMIN_EMAILS = ['pratham.solanki30@gmail.com'];
-
     async loginWithGoogle(flow: 'login' | 'signup' = 'login') {
         const provider = new GoogleAuthProvider();
         try {
             const result = await signInWithPopup(this.auth, provider);
-            const userEmail = result.user.email;
-
-            if (!userEmail || !this.ADMIN_EMAILS.includes(userEmail)) {
-                await deleteUser(result.user).catch(() => { }); // Cleanup if possible/needed
-                await this.logout(); // Ensure signed out
-                throw new Error("Unauthorized Access: You are not an admin.");
-            }
-
-            const additionalUserInfo = getAdditionalUserInfo(result);
-
-            if (flow === 'login' && additionalUserInfo?.isNewUser) {
-                // For admin, we might strictly allow new users if they are in the whitelist, 
-                // but the original code had logic to block new users on 'login' flow.
-                // Since they are whitelisted, we can probably allow it, OR maintain the logic.
-                // Let's assume if they are whitelisted, they are allowed regardless of "new-ness" for now,
-                // OR stick to the previous logic. The previous logic threw "Account does not exist".
-                // Given the explicit whitelist, it's safer to just allow them if they match.
-                // BUT, sticking to previous behavior + whitelist:
-                // If valid admin email, we allow.
-            }
 
             this.setLastUsed();
-            this.router.navigate(['/dashboard']);
+            this.navigateBasedOnRole(result.user);
             return result.user;
         } catch (error) {
             console.error('Google login error:', error);
@@ -79,7 +59,7 @@ export class AuthService {
         try {
             const result = await signInWithEmailAndPassword(this.auth, email, password);
             this.setLastUsed();
-            this.router.navigate(['/dashboard']);
+            this.navigateBasedOnRole(result.user);
             return result.user;
         } catch (error) {
             console.error('Email login error:', error);
@@ -91,11 +71,21 @@ export class AuthService {
         try {
             const result = await createUserWithEmailAndPassword(this.auth, email, password);
             this.setLastUsed();
-            this.router.navigate(['/dashboard']);
+            this.navigateBasedOnRole(result.user);
             return result.user;
         } catch (error) {
             console.error('Sign up error:', error);
             throw error;
+        }
+    }
+
+    private navigateBasedOnRole(user: User) {
+        if (this.isAdmin(user.email)) {
+            // Admin goes to main dashboard (Client Manager)
+            this.router.navigate(['/dashboard']);
+        } else {
+            // Normal user goes to Overview
+            this.router.navigate(['/dashboard/overview']);
         }
     }
 

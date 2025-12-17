@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+
 import { initializeDatabase } from './database';
 import contactsRoutes from './routes/contacts.routes';
 import dealsRoutes from './routes/deals.routes';

@@ -1,15 +1,7 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login.component';
 import { OnboardingComponent } from './onboarding.component';
-import { DashboardComponent } from './dashboard.component';
 import { LandingComponent } from './landing.component';
-import { OverviewComponent } from './overview.component';
-import { ContactsComponent } from './contacts.component';
-import { DealsComponent } from './deals.component';
-import { IntegrationComponent } from './integration.component';
-import { TasksComponent } from './tasks.component';
-import { SettingsComponent } from './settings.component';
-import { ContactDetailComponent } from './contact-detail.component';
 import { IdealComponent } from './ideal.component';
 import { PricingComponent } from './pricing.component';
 import { BlogComponent } from './blog.component';
@@ -22,14 +14,18 @@ import { AboutComponent } from './about.component';
 import { ChangelogComponent } from './changelog.component';
 import { BrandComponent } from './brand.component';
 import { HelpComponent } from './help.component';
-import { ReferralPartnersComponent } from './referral-partners.component';
-import { authGuard } from './auth.guard';
-
-// New Components
-import { ClientsComponent } from './dashboard/clients/clients.component';
-import { ClientManagerComponent } from './dashboard/clients/client-manager.component';
 import { PortalLoginComponent } from './portal/portal-login.component';
-import { PortalDashboardComponent } from './portal/portal-dashboard.component';
+
+// Dashboard Imports
+import { DashboardLayoutComponent } from './dashboard-features/dashboard-layout.component';
+import { OverviewComponent } from './dashboard-features/overview/overview.component';
+import { LeadsComponent } from './dashboard-features/leads/leads.component';
+import { ReferralPartnersComponent } from './dashboard-features/referral-partners/referral-partners.component';
+import { DealsComponent } from './dashboard-features/deals/deals.component';
+import { IntegrationComponent } from './dashboard-features/integration/integration.component';
+import { TasksComponent } from './dashboard-features/tasks/tasks.component';
+import { SettingsComponent } from './dashboard-features/settings/settings.component';
+import { HelpComponent as DashboardHelpComponent } from './dashboard-features/help/help.component';
 
 export const routes: Routes = [
   {
@@ -60,31 +56,12 @@ export const routes: Routes = [
     path: 'terms',
     component: TermsComponent,
   },
-  {
-    path: 'dashboard',
-    children: [
-      { path: '', redirectTo: 'clients', pathMatch: 'full' },
-      { path: 'overview', component: OverviewComponent },
-      { path: 'contacts', component: ContactsComponent },
-      { path: 'referral-partners', component: ReferralPartnersComponent },
-      { path: 'contacts/:id', component: ContactDetailComponent },
-      { path: 'deals', component: DealsComponent },
-      { path: 'integration', component: IntegrationComponent },
-      { path: 'tasks', component: TasksComponent },
-      { path: 'settings', component: SettingsComponent },
-      // New Admin Routes
-      { path: 'clients', component: ClientsComponent },
-      { path: 'clients/:id', component: ClientManagerComponent },
-    ],
-    canActivate: [authGuard]
-  },
   // Customer Portal Routes
   {
     path: 'portal',
     children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: PortalLoginComponent },
-      { path: 'dashboard', component: PortalDashboardComponent }
     ]
   },
   {
@@ -118,6 +95,27 @@ export const routes: Routes = [
   {
     path: 'help',
     component: HelpComponent,
+  },
+  // Dashboard Routes
+  {
+    path: 'dashboard',
+    component: DashboardLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'overview', pathMatch: 'full' },
+      { path: 'overview', component: OverviewComponent },
+      {
+        path: 'contacts',
+        children: [
+          { path: 'leads', component: LeadsComponent },
+          { path: 'referral-partners', component: ReferralPartnersComponent }
+        ]
+      },
+      { path: 'deals', component: DealsComponent },
+      { path: 'integration', component: IntegrationComponent },
+      { path: 'tasks', component: TasksComponent },
+      { path: 'settings', component: SettingsComponent },
+      { path: 'help', component: DashboardHelpComponent },
+    ]
   },
   {
     path: '**',

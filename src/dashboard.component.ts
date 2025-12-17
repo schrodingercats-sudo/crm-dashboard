@@ -13,7 +13,7 @@ export class DashboardComponent {
   private router = inject(Router);
   private elementRef = inject(ElementRef);
 
-  isSidebarCollapsed = signal(true);
+  isSidebarCollapsed = signal(false);
   isProfileDropdownOpen = signal(false);
   isMobileSidebarOpen = signal(false);
 

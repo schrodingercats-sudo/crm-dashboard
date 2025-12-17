@@ -15,14 +15,14 @@ export class ContactDetailComponent {
   private route = inject(ActivatedRoute);
   private contactService = inject(ContactService);
 
-  private leadId$ = this.route.paramMap.pipe(map(params => Number(params.get('id'))));
-  
+  private leadId$ = this.route.paramMap.pipe(map(params => params.get('id')!));
+
   lead = toSignal(
-      this.leadId$.pipe(
-          map(id => this.contactService.getLead(id))
-      )
+    this.leadId$.pipe(
+      map(id => this.contactService.getLead(id))
+    )
   );
-  
+
   getStageClass(stage: Lead['stage'] | undefined): string {
     if (!stage) return 'bg-gray-100 text-gray-700';
     switch (stage) {
