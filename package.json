@@ -28,9 +28,10 @@
     "clsx": "^2.1.1",
     "firebase": "^12.6.0",
     "lucide-angular": "^0.561.0",
+    "autoprefixer": "^10.4.20",
     "rxjs": "^7.8.2",
     "tailwind-merge": "^3.4.0",
-    "tailwindcss": "latest"
+    "tailwindcss": "^3.4.17"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
