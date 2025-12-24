@@ -19,7 +19,7 @@ export class SettingsComponent {
   appearance = computed(() => this.settingsService.settings().appearance);
 
   saveSettings() {
-    console.log('Settings are auto-saved via effects in SettingsService.');
+    // Settings are auto-saved via effects in SettingsService
     // Optional: Show a toast or notification
     alert('Settings saved successfully!');
   }

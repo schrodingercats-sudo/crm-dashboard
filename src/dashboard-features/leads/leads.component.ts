@@ -1,48 +1,47 @@
 
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal, inject } from '@angular/core';
+import { ContactService, Lead } from '../../contact.service';
+import { DataAccessService } from '../../data-access.service';
+import { NavigationService } from '../../navigation.service';
 
-export interface Lead {
-  id: number;
-  name: string;
-  avatar: string;
-  email: string;
-  phone: string;
-  purpose: string;
-  amount: number;
-  leadOwners: { name: string; avatar: string }[];
-  progress: number;
-  stage: 'New' | 'In progress' | 'Loan Granted';
-}
+import { AddContactDialogComponent } from '../../components/add-contact-dialog/add-contact-dialog.component';
 
 @Component({
   standalone: true,
   selector: 'app-leads',
   templateUrl: './leads.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
+  imports: [CommonModule, AddContactDialogComponent],
 })
 export class LeadsComponent {
+  contactService = inject(ContactService);
+  dataAccessService = inject(DataAccessService);
+  navigationService = inject(NavigationService);
+  
   activeTab = signal('leads');
+  showAddContactDialog = signal(false);
 
-  leads = signal<Lead[]>([
-    { id: 1, name: 'Jenny Wilson', avatar: 'https://picsum.photos/id/1027/50/50', email: 'jenny.wilson@gmail.com', phone: '(603) 555-0123', purpose: 'Home Loan', amount: 978878, leadOwners: [{ name: 'A', avatar: 'https://picsum.photos/id/1005/50/50' }, { name: 'B', avatar: 'https://picsum.photos/id/1011/50/50' }], progress: 70, stage: 'New' },
-    { id: 2, name: 'Eleanor Pena', avatar: 'https://picsum.photos/id/1028/50/50', email: 'eleanor.pena@gmail.com', phone: '(208) 555-0112', purpose: 'Gold Loan', amount: 9878, leadOwners: [{ name: 'C', avatar: 'https://picsum.photos/id/1012/50/50' }, { name: 'D', avatar: 'https://picsum.photos/id/1013/50/50' }], progress: 20, stage: 'In progress' },
-    { id: 3, name: 'Jane Cooper', avatar: 'https://picsum.photos/id/1029/50/50', email: 'jane.cooper@gmail.com', phone: '(205) 555-0100', purpose: 'Business Loan', amount: 43532, leadOwners: [{ name: 'A', avatar: 'https://picsum.photos/id/1005/50/50' }, { name: 'B', avatar: 'https://picsum.photos/id/1011/50/50' }], progress: 45, stage: 'Loan Granted' },
-    { id: 4, name: 'Imalia Jones', avatar: 'https://picsum.photos/id/1031/50/50', email: 'imalia.jones@gmail.com', phone: '(201) 555-0124', purpose: 'Property Loan', amount: 978878, leadOwners: [{ name: 'E', avatar: 'https://picsum.photos/id/1014/50/50' }], progress: 96, stage: 'In progress' },
-    { id: 5, name: 'Linda Miles', avatar: 'https://picsum.photos/id/1032/50/50', email: 'linda.miles@gmail.com', phone: '(307) 555-0133', purpose: 'Education Loan', amount: 9878, leadOwners: [{ name: 'A', avatar: 'https://picsum.photos/id/1005/50/50' }, { name: 'F', avatar: 'https://picsum.photos/id/1015/50/50' }], progress: 50, stage: 'New' },
-    { id: 6, name: 'Bella Sanders', avatar: 'https://picsum.photos/id/1035/50/50', email: 'bella.sanders@gmail.com', phone: '(907) 555-0101', purpose: 'Gold Loan', amount: 13324, leadOwners: [{ name: 'E', avatar: 'https://picsum.photos/id/1014/50/50' }], progress: 42, stage: 'Loan Granted' },
-    { id: 7, name: 'Jacob Jones', avatar: 'https://picsum.photos/id/1036/50/50', email: 'jacob.jones@gmail.com', phone: '(907) 555-0101', purpose: 'Home Loan', amount: 13324, leadOwners: [{ name: 'A', avatar: 'https://picsum.photos/id/1005/50/50' }, { name: 'D', avatar: 'https://picsum.photos/id/1013/50/50' }], progress: 56, stage: 'New' },
-    { id: 7, name: 'Jacob Jones', avatar: 'https://picsum.photos/id/1036/50/50', email: 'jacob.jones@gmail.com', phone: '(907) 555-0101', purpose: 'Home Loan', amount: 13324, leadOwners: [{ name: 'A', avatar: 'https://picsum.photos/id/1005/50/50' }, { name: 'D', avatar: 'https://picsum.photos/id/1013/50/50' }], progress: 56, stage: 'New' },
-  ]);
+  // Get role-appropriate data
+  currentRole = this.navigationService.currentRole;
+  leads = this.contactService.getLeads();
 
-  referrals = signal([
-    { id: 1, name: 'Esther Howard', email: 'esther.howard@gmail.com', type: 'Real Estate Agent', referred: 12, commission: '$4,500', status: 'Active' },
-    { id: 2, name: 'Cameron Williamson', email: 'cameron.williamson@gmail.com', type: 'Financial Advisor', referred: 8, commission: '$3,200', status: 'Active' },
-    { id: 3, name: 'Brooklyn Simmons', email: 'brooklyn.simmons@gmail.com', type: 'Lawyer', referred: 3, commission: '$1,100', status: 'Pending' },
-    { id: 4, name: 'Guy Hawkins', email: 'guy.hawkins@gmail.com', type: 'Mortgage Broker', referred: 25, commission: '$12,000', status: 'Active' },
-    { id: 5, name: 'Robert Fox', email: 'robert.fox@gmail.com', type: 'Accountant', referred: 5, commission: '$1,800', status: 'Inactive' },
-  ]);
+  // Role-based referrals data (admin sees all, users see their own)
+  referrals = computed(() => {
+    const role = this.currentRole();
+    const currentUserEmail = this.dataAccessService.getCurrentUserEmail();
+    
+    const allReferrals = [
+      { id: 1, name: 'Esther Howard', email: 'esther.howard@gmail.com', type: 'Real Estate Agent', referred: 12, commission: '$4,500', status: 'Active', ownerEmail: 'pratham.solanki30@gmail.com' },
+      { id: 2, name: 'Cameron Williamson', email: 'cameron.williamson@gmail.com', type: 'Financial Advisor', referred: 8, commission: '$3,200', status: 'Active', ownerEmail: 'user@example.com' },
+      { id: 3, name: 'Brooklyn Simmons', email: 'brooklyn.simmons@gmail.com', type: 'Lawyer', referred: 3, commission: '$1,100', status: 'Pending', ownerEmail: 'pratham.solanki30@gmail.com' },
+      { id: 4, name: 'Guy Hawkins', email: 'guy.hawkins@gmail.com', type: 'Mortgage Broker', referred: 25, commission: '$12,000', status: 'Active', ownerEmail: 'user@example.com' },
+      { id: 5, name: 'Robert Fox', email: 'robert.fox@gmail.com', type: 'Accountant', referred: 5, commission: '$1,800', status: 'Inactive', ownerEmail: currentUserEmail || 'user@example.com' },
+    ];
+
+    // Filter referrals based on user role
+    return this.dataAccessService.filterDataForUser(allReferrals, currentUserEmail);
+  });
 
   itemsPerPage = signal(5);
   currentPage = signal(1);
@@ -81,6 +80,18 @@ export class LeadsComponent {
           return 'bg-gray-100 text-gray-800';
       }
     };
+  });
+
+  // Check if user can manage all data (admin only)
+  canManageAllData = computed(() => {
+    const currentUserEmail = this.dataAccessService.getCurrentUserEmail();
+    return this.dataAccessService.canManageAllData(currentUserEmail);
+  });
+
+  // Role-based page title
+  pageTitle = computed(() => {
+    const role = this.currentRole();
+    return role === 'admin' ? 'All Leads' : 'My Leads';
   });
 
   goToPage(page: number) {

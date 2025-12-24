@@ -26,7 +26,7 @@
       </div>
       <div class="bg-gray-50 px-5 py-3">
         <div class="text-sm">
-          <a routerLink="/dashboard/contacts" class="font-medium text-gray-700 hover:text-gray-900">View all</a>
+          <a [routerLink]="baseRoute() + '/contacts'" class="font-medium text-gray-700 hover:text-gray-900">View all</a>
         </div>
       </div>
     </div>
@@ -50,7 +50,7 @@
       </div>
       <div class="bg-gray-50 px-5 py-3">
         <div class="text-sm">
-          <a routerLink="/dashboard/deals" class="font-medium text-gray-700 hover:text-gray-900">View pipeline</a>
+          <a [routerLink]="baseRoute() + '/deals'" class="font-medium text-gray-700 hover:text-gray-900">View pipeline</a>
         </div>
       </div>
     </div>
@@ -74,7 +74,7 @@
       </div>
       <div class="bg-gray-50 px-5 py-3">
         <div class="text-sm">
-          <a routerLink="/dashboard/tasks" class="font-medium text-gray-700 hover:text-gray-900">View tasks</a>
+          <a [routerLink]="baseRoute() + '/tasks'" class="font-medium text-gray-700 hover:text-gray-900">View tasks</a>
         </div>
       </div>
     </div>
@@ -98,7 +98,7 @@
       </div>
       <div class="bg-gray-50 px-5 py-3">
         <div class="text-sm">
-          <a routerLink="/dashboard/contacts" class="font-medium text-gray-700 hover:text-gray-900">View reports</a>
+          <a [routerLink]="baseRoute() + '/contacts'" class="font-medium text-gray-700 hover:text-gray-900">View reports</a>
         </div>
       </div>
     </div>

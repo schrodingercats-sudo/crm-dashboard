@@ -1,7 +1,8 @@
-import { Component, inject, signal, ElementRef } from '@angular/core';
+import { Component, inject, signal, ElementRef, computed } from '@angular/core';
 import { Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DashboardTestimonialsComponent } from './components/dashboard-testimonials/dashboard-testimonials.component';
+import { NavigationService } from './navigation.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,10 +13,18 @@ import { DashboardTestimonialsComponent } from './components/dashboard-testimoni
 export class DashboardComponent {
   private router = inject(Router);
   private elementRef = inject(ElementRef);
+  private navigationService = inject(NavigationService);
 
   isSidebarCollapsed = signal(false);
   isProfileDropdownOpen = signal(false);
   isMobileSidebarOpen = signal(false);
+
+  // Get role-based routes for navigation
+  currentRole = this.navigationService.currentRole;
+  baseRoute = computed(() => {
+    const role = this.currentRole();
+    return role === 'admin' ? '/admin/dashboard' : '/user/dashboard';
+  });
 
   toggleProfileDropdown(event: MouseEvent): void {
     event.stopPropagation();

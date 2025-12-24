@@ -1,0 +1,8 @@
+<div class="flex h-screen bg-white">
+  <app-user-sidebar class="hidden lg:flex"></app-user-sidebar>
+  <app-mobile-sidebar [isOpen]="mobileSidebarOpen()" (close)="toggleMobileSidebar()"></app-mobile-sidebar>
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <app-header (menuToggle)="toggleMobileSidebar()"></app-header>
+    <router-outlet></router-outlet>
+  </div>
+</div>

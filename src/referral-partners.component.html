@@ -10,8 +10,8 @@
   <!-- Tabs -->
   <div class="border-b border-gray-200">
       <nav class="-mb-px flex space-x-8 overflow-x-auto">
-          <a routerLink="/dashboard/contacts" class="py-3 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap">Leads</a>
-          <a routerLink="/dashboard/referral-partners" class="py-3 px-1 border-b-2 border-gray-800 font-semibold text-gray-800 whitespace-nowrap">Referral Partners</a>
+          <a [routerLink]="baseRoute() + '/contacts'" class="py-3 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap">Leads</a>
+          <a [routerLink]="baseRoute() + '/referral-partners'" class="py-3 px-1 border-b-2 border-gray-800 font-semibold text-gray-800 whitespace-nowrap">Referral Partners</a>
       </nav>
   </div>
 

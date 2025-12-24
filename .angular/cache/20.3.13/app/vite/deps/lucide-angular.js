@@ -18,7 +18,8 @@ import {
   ɵɵdirectiveInject,
   ɵɵprojection,
   ɵɵprojectionDef
-} from "./chunk-GXK5ZLRH.js";
+} from "./chunk-2LHD4WWD.js";
+import "./chunk-B2KI3AIV.js";
 import {
   __spreadProps,
   __spreadValues

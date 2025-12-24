@@ -1,17 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, orderBy, setDoc, Timestamp } from 'firebase/firestore';
-
-// Reuse config (In a real app, move to environment file)
-const firebaseConfig = {
-    apiKey: "AIzaSyCWqmOiSs08mXXtNVpJhGb7_SG0kcyLWQ0",
-    authDomain: "zyptenix-ab.firebaseapp.com",
-    projectId: "zyptenix-ab",
-    storageBucket: "zyptenix-ab.firebasestorage.app",
-    messagingSenderId: "710758393566",
-    appId: "1:710758393566:web:6c008994a556ec3691044f",
-    measurementId: "G-S10E7B3ZKJ"
-};
+import { environment } from './environments/environment.development';
 
 export interface Client {
     id?: string;
@@ -35,7 +25,7 @@ export interface ProjectUpdate {
     providedIn: 'root'
 })
 export class FirestoreService {
-    private app = initializeApp(firebaseConfig);
+    private app = initializeApp(environment.firebase);
     private db = getFirestore(this.app);
 
     constructor() { }

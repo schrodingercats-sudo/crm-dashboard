@@ -1,6 +1,22 @@
 -- Enable UUID extension
 create extension if not exists "uuid-ossp";
 
+-- User Profiles Table (extends auth.users)
+create table public.user_profiles (
+  id uuid default gen_random_uuid() primary key,
+  user_id uuid references auth.users(id) on delete cascade,
+  email text not null,
+  full_name text,
+  avatar_url text,
+  role text default 'user' check (role in ('admin', 'user')),
+  onboarding_completed boolean default false,
+  company text,
+  job_title text,
+  phone text,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
 -- Contacts Table
 create table public.contacts (
   id uuid default gen_random_uuid() primary key,
@@ -59,6 +75,7 @@ create table public.project_updates (
 );
 
 -- Enable RLS (Security Best Practice)
+alter table public.user_profiles enable row level security;
 alter table public.contacts enable row level security;
 alter table public.lead_owners enable row level security;
 alter table public.deals enable row level security;
@@ -66,6 +83,7 @@ alter table public.clients enable row level security;
 alter table public.project_updates enable row level security;
 
 -- Policies (Open for now to mimic current backend, lock down later)
+create policy "Enable all access for all users" on public.user_profiles for all using (true);
 create policy "Enable all access for all users" on public.contacts for all using (true);
 create policy "Enable all access for all users" on public.lead_owners for all using (true);
 create policy "Enable all access for all users" on public.deals for all using (true);

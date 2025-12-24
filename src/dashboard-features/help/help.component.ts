@@ -40,7 +40,7 @@ export class HelpComponent {
   }
 
   submitSupportRequest() {
-    console.log('Sending support request:', this.contactForm());
+    // Send support request (implementation would go here)
     alert('Support request sent! We will get back to you shortly.');
     this.contactForm.set({ subject: '', message: '' });
   }

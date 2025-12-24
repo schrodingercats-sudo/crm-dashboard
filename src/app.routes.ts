@@ -18,6 +18,8 @@ import { PortalLoginComponent } from './portal/portal-login.component';
 
 // Dashboard Imports
 import { DashboardLayoutComponent } from './dashboard-features/dashboard-layout.component';
+import { AdminDashboardLayoutComponent } from './dashboard-features/admin-dashboard-layout.component';
+import { UserDashboardLayoutComponent } from './dashboard-features/user-dashboard-layout.component';
 import { OverviewComponent } from './dashboard-features/overview/overview.component';
 import { LeadsComponent } from './dashboard-features/leads/leads.component';
 import { ReferralPartnersComponent } from './dashboard-features/referral-partners/referral-partners.component';
@@ -26,6 +28,11 @@ import { IntegrationComponent } from './dashboard-features/integration/integrati
 import { TasksComponent } from './dashboard-features/tasks/tasks.component';
 import { SettingsComponent } from './dashboard-features/settings/settings.component';
 import { HelpComponent as DashboardHelpComponent } from './dashboard-features/help/help.component';
+
+// Guards
+import { adminGuard } from './admin.guard';
+import { userGuard } from './user.guard';
+import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
   {
@@ -96,16 +103,18 @@ export const routes: Routes = [
     path: 'help',
     component: HelpComponent,
   },
-  // Dashboard Routes
+  // Admin Dashboard Routes
   {
-    path: 'dashboard',
-    component: DashboardLayoutComponent,
+    path: 'admin/dashboard',
+    component: AdminDashboardLayoutComponent,
+    canActivate: [adminGuard],
     children: [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: 'overview', component: OverviewComponent },
       {
         path: 'contacts',
         children: [
+          { path: '', redirectTo: 'leads', pathMatch: 'full' },
           { path: 'leads', component: LeadsComponent },
           { path: 'referral-partners', component: ReferralPartnersComponent }
         ]
@@ -115,6 +124,59 @@ export const routes: Routes = [
       { path: 'tasks', component: TasksComponent },
       { path: 'settings', component: SettingsComponent },
       { path: 'help', component: DashboardHelpComponent },
+      // Fallback for invalid admin routes
+      { path: '**', redirectTo: 'overview' }
+    ]
+  },
+  // User Dashboard Routes
+  {
+    path: 'user/dashboard',
+    component: UserDashboardLayoutComponent,
+    canActivate: [userGuard],
+    children: [
+      { path: '', redirectTo: 'overview', pathMatch: 'full' },
+      { path: 'overview', component: OverviewComponent },
+      { path: 'contacts', component: LeadsComponent }, // Reusing LeadsComponent for user contacts
+      { path: 'deals', component: DealsComponent },
+      { path: 'tasks', component: TasksComponent },
+      { path: 'settings', component: SettingsComponent },
+      { path: 'help', component: DashboardHelpComponent },
+      // Fallback for invalid user routes
+      { path: '**', redirectTo: 'overview' }
+    ]
+  },
+  // Legacy Dashboard Routes (for backward compatibility)
+  {
+    path: 'dashboard',
+    component: DashboardLayoutComponent,
+    canActivate: [authGuard],
+    children: [
+      { path: '', redirectTo: 'overview', pathMatch: 'full' },
+      { path: 'overview', component: OverviewComponent },
+      {
+        path: 'contacts',
+        children: [
+          { path: '', redirectTo: 'leads', pathMatch: 'full' },
+          { path: 'leads', component: LeadsComponent },
+          { path: 'referral-partners', component: ReferralPartnersComponent }
+        ]
+      },
+      { path: 'deals', component: DealsComponent },
+      { path: 'integration', component: IntegrationComponent },
+      { path: 'tasks', component: TasksComponent },
+      { path: 'settings', component: SettingsComponent },
+      { path: 'help', component: DashboardHelpComponent },
+      // Fallback for invalid legacy routes
+      { path: '**', redirectTo: 'overview' }
+    ]
+  },
+  // Error handling routes
+  {
+    path: 'error',
+    children: [
+      { path: 'access-denied', component: AccountNotFoundComponent },
+      { path: 'network-error', component: AccountNotFoundComponent },
+      { path: '**', redirectTo: '/error/access-denied' }
     ]
   },
   {

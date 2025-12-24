@@ -1,56 +1,87 @@
 
-<main class="flex-1 overflow-x-hidden overflow-y-auto bg-white p-6">
+<main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-6">
   <div class="container mx-auto">
     <div class="flex justify-between items-center mb-6">
-      <h1 class="text-3xl font-bold text-gray-900">Tasks</h1>
-      <button class="px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 text-sm font-medium">New Task</button>
+      <h1 class="text-3xl font-bold text-gray-900">{{ pageTitle() }}</h1>
+      <button (click)="showAddTaskDialog.set(true)" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium">New Task</button>
     </div>
 
-    <div class="bg-white shadow overflow-hidden sm:rounded-md border border-gray-200">
-      <ul role="list" class="divide-y divide-gray-200">
-        @for(task of tasks(); track task.id) {
-          <li>
-            <div class="px-4 py-4 sm:px-6 hover:bg-gray-50 transition duration-150 ease-in-out">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                  <input type="checkbox" class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 mr-4">
-                  <p class="text-sm font-medium text-indigo-600 truncate">{{ task.title }}</p>
-                </div>
-                <div class="ml-2 flex-shrink-0 flex">
-                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
-                    [class.bg-green-100]="task.status === 'Completed'" [class.text-green-800]="task.status === 'Completed'"
-                    [class.bg-yellow-100]="task.status === 'In Progress'" [class.text-yellow-800]="task.status === 'In Progress'"
-                    [class.bg-gray-100]="task.status === 'Pending'" [class.text-gray-800]="task.status === 'Pending'">
-                    {{ task.status }}
-                  </span>
+    <!-- Task Statistics -->
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+      <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+        <h3 class="text-sm font-medium text-gray-500">Total Tasks</h3>
+        <p class="text-2xl font-bold text-gray-900">{{ taskStats().total }}</p>
+      </div>
+      <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+        <h3 class="text-sm font-medium text-gray-500">Pending</h3>
+        <p class="text-2xl font-bold text-gray-600">{{ taskStats().pending }}</p>
+      </div>
+      <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+        <h3 class="text-sm font-medium text-gray-500">In Progress</h3>
+        <p class="text-2xl font-bold text-blue-600">{{ taskStats().inProgress }}</p>
+      </div>
+      <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+        <h3 class="text-sm font-medium text-gray-500">Completed</h3>
+        <p class="text-2xl font-bold text-green-600">{{ taskStats().completed }}</p>
+      </div>
+      <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+        <h3 class="text-sm font-medium text-gray-500">Overdue</h3>
+        <p class="text-2xl font-bold text-red-600">{{ taskStats().overdue }}</p>
+      </div>
+    </div>
+
+    @if (showAddTaskDialog()) {
+        <app-add-task-dialog (closed)="showAddTaskDialog.set(false)"></app-add-task-dialog>
+    }
+    
+    @if (taskService.isLoading()) {
+        <div class="flex justify-center items-center py-8">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        </div>
+    }
+
+    <!-- Tasks by Status -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      @for (status of ['Pending', 'In Progress', 'Completed']; track status) {
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+          <div class="px-6 py-4 border-b border-gray-200">
+            <h2 class="text-lg font-semibold text-gray-900">{{ status }}</h2>
+            <p class="text-sm text-gray-500">{{ tasksByStatus()[status].length }} tasks</p>
+          </div>
+          <div class="p-6 space-y-4 max-h-96 overflow-y-auto">
+            @for (task of tasksByStatus()[status]; track task.id) {
+              <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow" 
+                   [class.border-red-300]="isOverdue(task)" [class.bg-red-50]="isOverdue(task)">
+                <div class="flex items-start justify-between">
+                  <div class="flex-1">
+                    <h3 class="text-sm font-medium text-gray-900 mb-1">{{ task.title }}</h3>
+                    <p class="text-xs text-gray-500 mb-2">{{ task.description }}</p>
+                    <div class="flex items-center space-x-2 text-xs">
+                      <span class="inline-flex items-center px-2 py-0.5 rounded-full font-medium" [class]="getPriorityColor(task.priority)">
+                        {{ task.priority }}
+                      </span>
+                      <span class="text-gray-500">Due: {{ task.dueDate }}</span>
+                      @if (isOverdue(task)) {
+                        <span class="text-red-600 font-medium">Overdue</span>
+                      }
+                    </div>
+                  </div>
+                  <div class="ml-4">
+                    <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-medium text-gray-600">
+                      {{ (task.assignee || 'U').charAt(0).toUpperCase() }}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="mt-2 sm:flex sm:justify-between">
-                <div class="sm:flex">
-                  <p class="flex items-center text-sm text-gray-500 mr-6">
-                    <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-                    </svg>
-                    {{ task.assignee }}
-                  </p>
-                  <p class="flex items-center text-sm text-gray-500">
-                    <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
-                    </svg>
-                    Due on {{ task.dueDate }}
-                  </p>
-                </div>
-                <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
-                  <svg class="flex-shrink-0 mr-1.5 h-5 w-5" [class.text-red-500]="task.priority === 'High'" [class.text-yellow-500]="task.priority === 'Medium'" [class.text-blue-500]="task.priority === 'Low'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                  </svg>
-                  {{ task.priority }} Priority
-                </div>
+            }
+            @if (tasksByStatus()[status].length === 0) {
+              <div class="text-center py-8 text-gray-500">
+                <p class="text-sm">No {{ status.toLowerCase() }} tasks</p>
               </div>
-            </div>
-          </li>
-        }
-      </ul>
+            }
+          </div>
+        </div>
+      }
     </div>
   </div>
 </main>

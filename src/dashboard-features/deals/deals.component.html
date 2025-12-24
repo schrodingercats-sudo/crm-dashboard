@@ -2,12 +2,43 @@
 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-6">
   <div class="h-full flex flex-col">
     <div class="flex justify-between items-center mb-6">
-      <h1 class="text-3xl font-bold text-gray-900">Deals Pipeline</h1>
-      <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium">Add Deal</button>
+      <h1 class="text-3xl font-bold text-gray-900">{{ pageTitle() }}</h1>
+      @if (canManageAllData()) {
+        <button (click)="showAddDealDialog.set(true)" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium">Add Deal</button>
+      }
     </div>
+
+    <!-- Deal Statistics -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+        <h3 class="text-sm font-medium text-gray-500">Total Deals</h3>
+        <p class="text-2xl font-bold text-gray-900">{{ dealStats().total }}</p>
+      </div>
+      <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+        <h3 class="text-sm font-medium text-gray-500">Total Value</h3>
+        <p class="text-2xl font-bold text-gray-900">${{ dealStats().totalValue.toLocaleString() }}</p>
+      </div>
+      <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+        <h3 class="text-sm font-medium text-gray-500">Won Deals</h3>
+        <p class="text-2xl font-bold text-green-600">{{ dealStats().won }}</p>
+      </div>
+      <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+        <h3 class="text-sm font-medium text-gray-500">Win Rate</h3>
+        <p class="text-2xl font-bold text-blue-600">{{ dealStats().winRate }}%</p>
+      </div>
+    </div>
+
+    @if (showAddDealDialog()) {
+        <app-add-deal-dialog (closed)="showAddDealDialog.set(false)"></app-add-deal-dialog>
+    }
 
     <!-- Kanban Board -->
     <div class="flex-1 overflow-x-auto">
+      @if (dealService.isLoading()) {
+          <div class="flex justify-center items-center h-64">
+              <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          </div>
+      }
       <div class="flex space-x-6 min-w-max pb-4 h-full">
         @for(stage of stages; track stage) {
           <div class="w-80 flex flex-col bg-gray-100 rounded-lg p-4 h-full">
@@ -20,13 +51,23 @@
               @for(deal of dealsByStage()[stage]; track deal.id) {
                 <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer">
                   <h3 class="text-gray-900 font-medium mb-1">{{ deal.title }}</h3>
-                  <p class="text-gray-500 text-sm mb-3">{{ deal.company }}</p>
+                  <p class="text-gray-500 text-sm mb-2">{{ deal.company }}</p>
+                  <div class="mb-3">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium" [class]="deal.typeColor">
+                      {{ deal.type }}
+                    </span>
+                  </div>
                   <div class="flex justify-between items-center pt-3 border-t border-gray-100">
                     <span class="text-sm font-semibold text-gray-900">${{ deal.value.toLocaleString() }}</span>
                     <div class="h-6 w-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold">
-                      {{ deal.owner.charAt(0) }}
+                      {{ (deal.ownerEmail || 'U').charAt(0).toUpperCase() }}
                     </div>
                   </div>
+                </div>
+              }
+              @if (dealsByStage()[stage].length === 0) {
+                <div class="text-center py-8 text-gray-500">
+                  <p class="text-sm">No deals in {{ stage.toLowerCase() }}</p>
                 </div>
               }
             </div>
